@@ -13,12 +13,52 @@ async function main() {
   const apiKey = crypto.randomBytes(20).toString("hex");
   await prisma.user.create({
     data: {
-      name: "John Doe",
-      email: "testUser@example.com",
+      name: "Richard",
+      email: "richard@example.com",
       passwordHash: hashedPassword,
       apiKey: apiKey,
+      posts: {
+        create: [
+          {
+            title: "Long Post 1",
+            content:
+              "This is the content of a much longer post. It contains more details, explanations, and examples to provide a comprehensive understanding of the topic. This post discusses various aspects and nuances, ensuring that readers gain a deep insight into the subject matter.",
+          },
+          {
+            title: "Long Post 2",
+            content:
+              "Here's another lengthy post. It delves into intricate details, presents multiple viewpoints, and offers a thorough analysis. By reading this post, one can grasp the complexities and intricacies of the discussed topic. The post aims to be informative and engaging, making it a must-read for enthusiasts.",
+          },
+        ],
+      },
     },
   });
+
+  const hashedPassword2 = await hash("testPassword", 10);
+  const apiKey2 = crypto.randomBytes(20).toString("hex");
+  await prisma.user.create({
+    data: {
+      name: "John Doe",
+      email: "john.doe@example.com",
+      passwordHash: hashedPassword2,
+      apiKey: apiKey2,
+      posts: {
+        create: [
+          {
+            title: "Post 1",
+            content: "This is the content of post 1.",
+          },
+          {
+            title: "Post 2",
+            content: "This is the content of post 2.",
+          },
+          // Add more posts as needed
+        ],
+      },
+    },
+  });
+
+  console.log("the database has been seeded 🌱");
 }
 
 main()

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:prepare": "prisma migrate dev --preview-feature",
+    "test:migrate": "prisma db seed",
+    "test:prepare": "prisma migrate deploy",
     "test": "npx dotenv -e .env.test vitest -i",
     "server": "ts-node app/server.ts",
     "dev": "ts-node-dev app/server.ts"
