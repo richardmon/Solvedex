@@ -1,32 +1,74 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import {
+  RouterProvider,
+  createBrowserRouter,
+  redirect,
+} from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { Main } from "./pages/Main";
+import Login from "./pages/Login";
+import { signout } from "./lib/api";
+import  Layout  from "./layout/Main";
+import SignUp from "./pages/SignUp";
 
-function App() {
-  const [count, setCount] = useState(0)
+const queryClient = new QueryClient();
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button onClick={() => setCount(count => count + 1)}>count is: {count}</button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  )
+const router = createBrowserRouter([
+  {
+    id: "root",
+    path: "/",
+    Component: Layout,
+    children: [
+      {
+        path: "login",
+        loader: loginLoader,
+        Component: Login,
+      },
+      {
+        path: "signup",
+        loader: loginLoader,
+        Component: SignUp,
+      },
+      {
+        index: true,
+        loader: protectedLoader,
+        Component: Main,
+      },
+    ],
+  },
+  {
+    path: "/logout",
+    async action() {
+      signout();
+      return redirect("/login");
+    },
+  },
+]);
+
+async function loginLoader() {
+  const apiKey = localStorage.getItem("apiKey");
+  if (apiKey) {
+    return redirect("/");
+  }
+  return null;
 }
 
-export default App
+async function protectedLoader() {
+  const apiKey = localStorage.getItem("apiKey");
+  if (!apiKey) {
+    return redirect("/login");
+  }
+  return null;
+}
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider
+        router={router}
+        fallbackElement={<p>Initial Load...</p>}
+      />
+    </QueryClientProvider>
+  );
+}
+
+export default App;

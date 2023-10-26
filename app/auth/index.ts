@@ -37,14 +37,14 @@ router.post(
     const newUser = await db.user.create({
       data: {
         name: name as string,
-        email: email as string,
+        email: (email as string).toLowerCase(),
         passwordHash: hashedPassword,
         apiKey: apiKey,
       },
     });
 
     // Return the API key to the user
-    res.status(201).json({ apiKey: newUser.apiKey });
+    res.status(201).json({ apiKey: newUser.apiKey, userId: newUser.id });
   },
 );
 
@@ -71,8 +71,9 @@ router.post("/login", loginValidations, async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Invalid username or password" });
   }
 
+  console.log("returning", { apiKey: user.apiKey, userId: user.id });
   // Return the API key for the authenticated user
-  res.json({ apiKey: user.apiKey });
+  res.json({ apiKey: user.apiKey, userId: user.id });
 });
 
 export default router;

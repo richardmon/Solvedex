@@ -1,9 +1,13 @@
-import * as reactPlugin from 'vite-plugin-react'
-import type { UserConfig } from 'vite'
+import path from "path"
+import react from "@vitejs/plugin-react-swc"
+import { defineConfig } from "vite"
 
-const config: UserConfig = {
-  jsx: 'react',
-  plugins: [reactPlugin]
-}
+export default defineConfig({
+ plugins: [react()],
+ resolve: {
+  alias: {
+   "@": path.resolve(__dirname, "./src"),
+  },
+ },
+})
 
-export default config

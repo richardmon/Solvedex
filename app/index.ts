@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import helmet from "helmet";
+import cors from "cors";
 import posts from "./posts";
 import auth from "./auth";
 import "../types";
@@ -9,6 +10,7 @@ const app = express();
 const db = new PrismaClient();
 
 // Middlewares
+app.use(cors());
 app.use(helmet());
 app.use(express.json());
 const authRequired = async (req: Request, res: Response, next: NextFunction) => {
