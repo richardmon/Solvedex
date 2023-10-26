@@ -1,0 +1,42 @@
+{
+  "name": "application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:prepare": "prisma migrate dev --preview-feature",
+    "test": "npx dotenv -e .env.test vitest -i",
+    "server": "ts-node app/server.ts",
+    "dev": "ts-node-dev app/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.5",
+    "@types/nunjucks": "^3.2.5",
+    "@types/supertest": "^2.0.15",
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.3.0",
+    "supertest": "^6.3.3",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "vitest": "^0.34.6"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.5.0",
+    "@types/express": "^4.17.20",
+    "@types/express-validator": "^3.0.0",
+    "@types/helmet": "^4.0.0",
+    "bcryptjs": "^2.4.3",
+    "chokidar": "^3.5.3",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.0.0",
+    "nunjucks": "^3.2.4",
+    "prisma": "^5.5.0"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
+}
