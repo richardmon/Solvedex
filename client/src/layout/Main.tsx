@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { useFetcher } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
@@ -9,7 +10,7 @@ const Layout = () => {
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header className="bg-primary text-white p-4 shadow-md flex justify-between items-center">
-        <h1 className="text-xl font-semibold">My App</h1>
+        <Link to="/" className="text-xl font-semibold">My App</Link>
         {isLoggedIn && (
           <fetcher.Form method="post" action="/logout">
             <Button variant="ghost">Logout</Button>

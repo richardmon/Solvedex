@@ -1,4 +1,9 @@
-import { LoginFormData, SignupRequestData } from "@/types";
+import {
+  LoginFormData,
+  PostCreate,
+  PostUpdate,
+  SignupRequestData,
+} from "@/types";
 
 const getHeaders = () => {
   const headers: HeadersInit = {
@@ -46,5 +51,54 @@ export const getAllPosts = async () => {
   const response = await fetch(`${baseUrl}/api/v1/posts`, {
     headers: getHeaders(),
   });
+  return response.json();
+};
+
+export const getSpecificPost = async (id: number) => {
+  const response = await fetch(`${baseUrl}/api/v1/posts/${id}`, {
+    headers: getHeaders(),
+  });
+  return response.json();
+};
+
+export const createPost = async (post: PostCreate) => {
+  const response = await fetch(`${baseUrl}/api/v1/posts/`, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify(post),
+  });
+
+  if (!response.ok) {
+    throw new Error("Post creation failed");
+  }
+
+  return response.json();
+};
+
+export const deletePost = async (id: number) => {
+  const response = await fetch(`${baseUrl}/api/v1/posts/${id}`, {
+    method: "DELETE",
+    headers: getHeaders(),
+  });
+  return response.json();
+};
+
+export const updatePost = async ({
+  id,
+  data,
+}: {
+  id: number;
+  data: PostUpdate;
+}) => {
+  const response = await fetch(`${baseUrl}/api/v1/posts/${id}`, {
+    method: "PUT",
+    headers: getHeaders(),
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Post update failed");
+  }
+
   return response.json();
 };

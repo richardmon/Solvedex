@@ -19,6 +19,28 @@ router.get("/", async (_, res) => {
   }
 });
 
+// Get a specific post
+router.get("/:id", async (req, res) => {
+  if (!req.user)
+    throw new Error("This endpoint shouldn't be accesible without an user");
+  try {
+    const post = await db.post.findUnique({
+      where: { id: Number(req.params.id) },
+    });
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+    if (post.userId !== req.user.id) {
+      return res
+        .status(403)
+        .json({ error: "You are not authorized to get this post" });
+    }
+    res.json(post);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Create new post
 router.post(
   "/",
@@ -45,7 +67,7 @@ router.post(
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 );
 
 // Delete a specific post
@@ -119,7 +141,7 @@ router.put(
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 );
 
 export default router;
