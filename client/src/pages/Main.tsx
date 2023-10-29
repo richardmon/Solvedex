@@ -143,7 +143,7 @@ export const Main = () => {
                     if (action === "delete") removePost(post.id);
                     else if (action === "modify") modifyPost(post.id);
                     else {
-                      console.error("what did you do");
+                      console.warn("what did you do");
                     }
                   }}
                 />
