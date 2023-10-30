@@ -13,7 +13,7 @@ const Layout = () => {
         <Link to="/" className="text-xl font-semibold">My App</Link>
         {isLoggedIn && (
           <fetcher.Form method="post" action="/logout">
-            <Button variant="ghost">Logout</Button>
+            <Button variant="ghost" data-testid="logout-button">Logout</Button>
           </fetcher.Form>
         )}
       </header>

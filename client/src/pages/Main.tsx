@@ -53,17 +53,20 @@ export function DropdownMenuCheckboxes(props: DropDownProps) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost">
+          <Button data-testid="dropdown-pencil" variant="ghost">
             <Pencil />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>Edit</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => props.action("modify")}>
+          <DropdownMenuItem
+          data-testid="dropdown-modify"
+          onClick={() => props.action("modify")}>
             Modify
           </DropdownMenuItem>
           <DropdownMenuItem
+           data-testid="dropdown-delete"
             onClick={handleDeleteClick}
             className="text-red-400"
           >
@@ -134,7 +137,7 @@ export const Main = () => {
     <>
       <div className="p-4 bg-gray-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {posts.map((post) => (
-          <Card key={post.id} className="h-[12rem]">
+          <Card key={post.id} className="h-[12rem]" data-testid="post-card">
             <CardHeader className="flex-row items-center justify-between">
               <CardTitle>{post.title}</CardTitle>
               {post.userId === Number(userId) && (
@@ -162,6 +165,7 @@ export const Main = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button 
+              data-test="new-post-button"
               className="fixed bottom-16 right-6 w-16 h-16 rounded-full"
               onClick={() => navigate("/post")}
               >

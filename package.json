@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:migrate": "prisma db seed",
-    "test:prepare": "prisma migrate deploy",
+    "prisma:seed": "prisma db seed",
+    "prisma:migrate": "prisma migrate deploy",
     "test": "npx dotenv -e .env.test vitest -i",
+    "test:e2e": "cypress run",
     "server": "ts-node app/server.ts",
     "dev": "ts-node-dev app/server.ts"
   },
@@ -14,9 +15,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@cypress/xpath": "^2.0.3",
     "@types/bcryptjs": "^2.4.5",
+    "@types/cypress": "^1.1.3",
     "@types/nunjucks": "^3.2.5",
     "@types/supertest": "^2.0.15",
+    "cypress-xpath": "^2.0.1",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.3.0",
     "supertest": "^6.3.3",
@@ -34,6 +38,7 @@
     "bcryptjs": "^2.4.3",
     "chokidar": "^3.5.3",
     "cors": "^2.8.5",
+    "cypress": "^13.3.3",
     "draft-js": "^0.11.7",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",

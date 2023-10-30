@@ -70,7 +70,7 @@ export default function PostEditor() {
           Post Title
         </label>
         <Input
-          id="post-title"
+          data-test="post-title-input"
           type="text"
           className="mt-1"
           value={title}
@@ -86,6 +86,7 @@ export default function PostEditor() {
           Post Content
         </label>
         <Textarea
+          data-test="post-content-textarea"
           ref={textAreaRef}
           onChange={handleContentChange}
           value={content}

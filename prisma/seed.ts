@@ -45,14 +45,17 @@ async function main() {
       posts: {
         create: [
           {
-            title: "Post 1",
+            title: "Delete Test",
             content: "This is the content of post 1.",
           },
           {
-            title: "Post 2",
+            title: "Modify Test",
             content: "This is the content of post 2.",
           },
-          // Add more posts as needed
+          {
+            title: "Static Test",
+            content: "This is the content of post 3.",
+          },
         ],
       },
     },
