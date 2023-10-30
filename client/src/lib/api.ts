@@ -18,7 +18,9 @@ const getHeaders = () => {
   return headers;
 };
 
-const baseUrl = import.meta.env.VITE_SERVER_URL;
+// FIXME: Coudn't get it to work with jest
+// const baseUrl = import.meta.env.VITE_SERVER_URL;
+const baseUrl = "http://localhost:3000"
 
 // AUTH
 // NOTE: I'm being super optimistic here, it would be good idea to check the responses with zod or yup
@@ -37,6 +39,9 @@ export const login = async (data: LoginFormData) => {
     headers: getHeaders(),
     body: JSON.stringify(data),
   });
+  if (!response.ok) {
+    throw new Error("Invalid email or password");
+  }
   return response.json();
 };
 

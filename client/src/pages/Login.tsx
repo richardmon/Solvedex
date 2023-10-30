@@ -1,3 +1,4 @@
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { login } from "@/lib/api";
 import { LoginFormData } from "@/types";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,6 +24,7 @@ export default function LoginAccount() {
     formState: { errors },
   } = useForm<LoginFormData>();
   const mutation = useMutation(login);
+  const [failedLogin, setFailedLogin] = useState(false);
   const navigate = useNavigate();
 
   const submit = (data: LoginFormData) => {
@@ -33,8 +36,8 @@ export default function LoginAccount() {
         navigate("/");
       },
 
-      onError: (e) => {
-        console.error(e);
+      onError: () => {
+        setFailedLogin(true);
       },
     });
   };
@@ -53,6 +56,12 @@ export default function LoginAccount() {
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
+            {failedLogin && (
+              <Alert variant="destructive" className="mb-8">
+                <AlertTitle>Error!</AlertTitle>
+                <AlertDescription>Invalid email or password</AlertDescription>
+              </Alert>
+            )}
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -94,12 +103,16 @@ export default function LoginAccount() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col">
-            <Button className="w-full">Login</Button>
+            <Button data-testid="login-button" className="w-full">
+              Login
+            </Button>
           </CardFooter>
           <p className="mt-2 text-xs text-center text-gray-700 mb-2">
             {" "}
             Don't have an account?{" "}
-            <Link to="/signup" className=" text-blue-600 hover:underline">Sign up</Link>
+            <Link to="/signup" className=" text-blue-600 hover:underline">
+              Sign up
+            </Link>
           </p>
         </Card>
       </form>

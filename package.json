@@ -6,8 +6,8 @@
   "scripts": {
     "prisma:seed": "prisma db seed",
     "prisma:migrate": "prisma migrate deploy",
-    "test": "npx dotenv -e .env.test vitest -i",
-    "test:e2e": "cypress run",
+    "test": "docker compose up -d && npm run prisma:migrate && npm run prisma:seed && cypress open",
+    "cypress": "cypress open",
     "server": "ts-node app/server.ts",
     "dev": "ts-node-dev app/server.ts"
   },

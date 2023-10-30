@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - DATABASE_URL=file:/usr/src/app/prisma/test.db
+    command: /bin/sh -c "rm -f prisma/test.db && npm run dev"
+      
+  frontend:
+    build: ./client
+    ports:
+      - "5174:5174"
+    working_dir: /usr/src/app/client
+    volumes:
+      - ./client:/usr/src/app/client
